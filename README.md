@@ -1,48 +1,129 @@
-# The Chronicle of [Your Name]
+# Habit Quest
 
-A personal RPG that turns your real-life habits into a character you level up, gear you equip, and bosses you slay.
+A habit-tracking RPG where your daily habits power your character. Log workouts, reading, meditation, and more to earn XP and level up 13 skills across four trees. Use your stats to fight progressively harder bosses in turn-based combat.
 
-## How to play
+**Live at:** [github.com/seanhaughmusic/habit-quest](https://github.com/seanhaughmusic/habit-quest)
 
-Once per day, message Cowork with what you did. Anything like:
+---
 
-> "Reading 30m, gym 45m, cycled 30m, 5h deep focus, 1hr doomscroll, hit macros, music 30m"
+## Getting started
 
-Cowork will:
-1. Award XP to the relevant skills
-2. Apply penalties for any negative habits
-3. Level up skills and stats that crossed thresholds
-4. Check for gear drops, streak bonuses, or boss triggers
-5. Append the day to `daily_log.md` with a short narrative
-6. Update `character_sheet.md` with your new state
+```bash
+npm install
+npm run dev
+```
 
-Then say **"show me my sheet"** anytime to see where you stand.
+Then open [http://localhost:5173](http://localhost:5173).
 
-## The files
+---
 
-| File | What it is |
+## How it works
+
+1. **Create your hero** — enter a name on first launch
+2. **Log daily habits** — tap a habit, enter minutes (or one-tap for flat XP habits)
+3. **Watch your skills grow** — XP feeds into 13 skills across 4 trees
+4. **Fight bosses** — use your stats in turn-based combat to defeat escalating enemies
+5. **Earn gear** — defeated bosses drop items that boost your XP gains
+
+All progress saves locally in your browser — no account needed.
+
+---
+
+## Skill trees
+
+| Tree | Skills |
 |---|---|
-| `character_sheet.md` | Your current level, HP/MP, stats, equipped gear, streaks |
-| `skill_trees.md` | All skill trees — Body, Mind, Craft, Discipline — with unlock paths |
-| `inventory.md` | Unequipped gear, consumables, trophies |
-| `daily_log.md` | The chronicle. One entry per day. |
-| `bosses.md` | Upcoming, active, and defeated bosses |
-| `quest_log.md` | Active quests, streak trackers, milestones |
-| `game_rules.md` | The rulebook Cowork uses to run your game (XP formulas, etc.) |
+| **Body** | Strength, Endurance, Agility, Vitality |
+| **Mind** | Focus, Knowledge, Wisdom |
+| **Craft** | Artistry, Craft, Mastery |
+| **Discipline** | Resolve, Consistency, Restraint |
 
-## Core loop
+---
 
-```
-Daily check-in  →  XP + penalties  →  Level ups / gear drops
-      ↑                                          ↓
-      └─── Bosses appear every 2-4 weeks ←──────┘
-```
+## Habits
 
-## Before your first day
+18 predefined habits mapped to skills:
 
-I still need two things from you to finalize the character:
+| Habit | Skill | XP |
+|---|---|---|
+| Gym / Weights | Strength | 1 XP/min |
+| Cardio | Endurance | 1 XP/min |
+| Sport / Recreation | Agility | 1 XP/min |
+| Stretching / Yoga | Vitality | 2 XP/min |
+| Hit Daily Macros | Vitality | +50 flat |
+| Slept 7+ Hours | Vitality | +40 flat |
+| Deep Focus Work | Focus | 1 XP/min |
+| Reading | Knowledge | 1 XP/min |
+| Meditation / Journaling | Wisdom | 2 XP/min |
+| Structured Learning | Knowledge | 1 XP/min |
+| Music Practice | Artistry | 1 XP/min |
+| Creative Work | Craft | 1 XP/min |
+| Side Project Coding | Mastery | 1 XP/min |
+| Cooking from Scratch | Craft | 1 XP/min |
+| Zero Doomscroll Day | Resolve | +30 flat |
+| Held a Hard Commitment | Resolve | +25 flat |
+| Hit Sleep Schedule | Consistency | +20 flat |
+| Said No to a Bad Habit | Restraint | +15 flat |
 
-1. **A character name** (and optionally a title — e.g. "Sean the Unbound")
-2. **A baseline assessment** — a quick snapshot of your current habits so I can set realistic starting stats rather than zeroing you out at Level 1 like you've never done anything.
+---
 
-Once I have those, your first real day begins.
+## Streak multipliers
+
+| Streak | XP bonus |
+|---|---|
+| 3 days | +10% |
+| 7 days | +25% |
+| 14 days | +40% |
+| 30 days | +60% |
+
+---
+
+## Leveling
+
+- Each skill levels independently
+- XP to reach level N: `N × 100` (100 for Lv1→2, 200 for Lv2→3, etc.)
+- Character level = total skill levels ÷ 13
+- HP = 100 + (Body levels × 5) + (Vitality × 10)
+- MP = 50 + (Mind levels × 5) + (Wisdom × 10)
+
+---
+
+## Combat
+
+Bosses have a **Power Check** — a minimum total skill level required to fight. Choose from 4 attack types each turn:
+
+| Attack | Uses |
+|---|---|
+| Physical Strike | Strength + Endurance |
+| Swift Attack | Agility + Resolve |
+| Mental Strike | Focus + Knowledge |
+| Wisdom Blast | Wisdom + Restraint |
+
+Hitting a boss's weakness deals 1.5× damage. Defeat bosses to unlock rewards and the next encounter.
+
+### Bosses (Act I)
+1. **The Shade of Sloth** — Power Check: 15 levels
+2. **The Doomscroll Wyrm** — Power Check: 35 levels
+3. **The Plateau Titan** — Power Check: 60 levels
+
+### Act II (unlocks after defeating Act I)
+4. **The Hollow Chorus** — Power Check: 90 levels
+
+---
+
+## Tech stack
+
+- [React 19](https://react.dev/) + [Vite 8](https://vite.dev/)
+- [Tailwind CSS v4](https://tailwindcss.com/)
+- Browser `localStorage` for persistence (no backend)
+
+---
+
+## Roadmap
+
+- [ ] User accounts / login
+- [ ] Premium tier with monthly item drops
+- [ ] Negative habit penalties
+- [ ] More bosses (Act II full roster, Act III)
+- [ ] Quest / milestone system
+- [ ] Gear crafting
